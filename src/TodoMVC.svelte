@@ -5,6 +5,7 @@
 	let currentFilter = 'all';
 	let items = [];
 	let editing = null;
+	let typing = '';
 
 	try {
 		items = JSON.parse(localStorage.getItem('todos-svelte')) || [];
@@ -48,8 +49,15 @@
 				completed: false
 			});
 			event.target.value = '';
-		}
+			typing = '';
+		} 
 	}
+
+	function handleTyping(event) {
+		console.log("event="+event.target.value)
+		typing = event.target.value
+	}
+
 
 	function handleEdit(event) {
 		if (event.which === ENTER_KEY) event.target.blur();
@@ -90,6 +98,7 @@
 	<input
 		class="new-todo"
 		on:keydown={createNew}
+		on:input={handleTyping}
 		placeholder="What needs to be done?"
 		autofocus
 	>
@@ -105,7 +114,13 @@
 				<li class="{item.completed ? 'completed' : ''} {editing === index ? 'editing' : ''}">
 					<div class="view">
 						<input class="toggle" type="checkbox" bind:checked={item.completed}>
-						<label on:dblclick="{() => editing = index}">{item.description}</label>
+						
+						<label on:dblclick="{() => editing = index}">
+							{#if typing!=="" && item.description.startsWith(typing)} <span class="typing">{typing}</span>{item.description.substr(typing.length)}
+							{:else}
+								{item.description}
+							{/if}
+						</label>
 						<button on:click="{() => remove(index)}" class="destroy"></button>
 					</div>
 

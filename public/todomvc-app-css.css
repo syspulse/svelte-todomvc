@@ -80,6 +80,7 @@ body {
 	text-rendering: optimizeLegibility;
 }
 
+.edit-typing,
 .new-todo,
 .edit {
 	position: relative;
@@ -97,6 +98,12 @@ body {
 	box-sizing: border-box;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+
+
+.edit-typing {
+	color: red;
+	background: rgba(0, 0, 0, 0.4);
 }
 
 .new-todo {
@@ -214,11 +221,21 @@ body {
 	display: block;
 	line-height: 1.2;
 	transition: color 0.4s;
+	color: darkslategray;
 }
 
 .todo-list li.completed label {
 	color: #d9d9d9;
 	text-decoration: line-through;
+}
+
+span.typing { 
+	color: black;
+	font-weight:bold;
+}
+
+.todo-list li.typing label {
+	color: blue;
 }
 
 .todo-list li .destroy {
